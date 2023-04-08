@@ -2,28 +2,45 @@ import { useState } from "react";
 
 export default function TodoApp() {
   const [title, setTitle] = useState("Juan");
-
-  function handleClick(e) {
-    e.preventDefault();
-    setTitle("Marcos");
-  }
+  const [todos, setTodos] = useState([]);
 
   function handleChange(e) {
-      const value = e.target.value;
+    const value = e.target.value;
 
-      setTitle(value);
+    setTitle(value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const newTodo = {
+      id: crypto.randomUUID(),
+      title: title,
+      completed: false,
+    };
+
+    const temp = [...todos];
+    temp.unshift(newTodo);
+
+    setTodos(temp);
   }
   return (
     <div className="todoContainer">
-      <form className="todoCreateForm">
+      <form className="todoCreateForm" onSubmit={handleSubmit}>
         <input onChange={handleChange} className="todoInput" value={title} />
         <input
-          onClick={handleClick}
+          onClick={handleSubmit}
           className="buttonCreate"
           type="submit"
           value="create todo"
         />
       </form>
+
+      <div className="todosContainer">
+        {todos.map((item) => (
+          <div>{item.title}</div>
+        ))}
+      </div>
     </div>
   );
 }
