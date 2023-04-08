@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Todo from "./todo";
 
+import "./todoApp.css";
+
 export default function TodoApp() {
-  const [title, setTitle] = useState("Juan");
+  const [title, setTitle] = useState("");
   const [todos, setTodos] = useState([]);
 
   function handleChange(e) {
@@ -24,6 +26,8 @@ export default function TodoApp() {
     temp.unshift(newTodo);
 
     setTodos(temp);
+
+    setTitle("");
   }
 
   function handleUpdate(id, value) {
